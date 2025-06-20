@@ -1,0 +1,30 @@
+<!-- close-tab.html -->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Processing...</title>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session_id');
+        const status = params.get('status');
+
+        const message =
+            status === 'success' && sessionId
+                ? { type: 'payment_success', sessionId }
+                : { type: 'payment_cancelled' };
+
+        if (window.opener) {
+            window.opener.postMessage(message, '*');
+        }
+
+        setTimeout(() => window.close(), 1000);
+    </script>
+</head>
+
+<body>
+    <h3>Redirecting you back to the app...</h3>
+</body>
+
+</html>
